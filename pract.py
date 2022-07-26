@@ -6,9 +6,9 @@ app= Flask(__name__)
 def hello_world():
     return '<h1>    CODING IS PURE MATHEMATICS ! </h1>'
 
-@app.route('/about')
-def about_page():
-    return '<h1> About Page </h1>'
+@app.route('/about/<username>')
+def about_page(username):
+    return f'<h1> This is the About Page {username}</h1>'
 
 @app.route('/admin')
 def admin_page():
