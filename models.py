@@ -1,3 +1,5 @@
+from flask_sqlalchemy import SQLAlchemy
+db=SQLAlchemy(app)
 class Item(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     date = db.Column(db.String(10))
@@ -8,4 +10,3 @@ class Item(db.Model):
 
     def __repr__(self):
         return f'Item {self.name}'
-        
