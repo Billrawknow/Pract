@@ -2,7 +2,7 @@ from datetime import date
 from importlib import import_module
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime,date
 
 
 app= Flask(__name__)
@@ -11,10 +11,15 @@ db=SQLAlchemy(app)
 
 class Item(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
-    date = db.Column(db.DateTime)
+    date = db.Column(db.String(10))
     name = db.Column(db.String(length=30), nullable=False, unique=True)
     kilograms = db.Column(db.Integer(), nullable=False)
     amount= db.Column(db.Integer(), nullable=False)
+
+
+    def __repr__(self):
+        return f'Item {self.name}'
+        
 @app.route('/')
 @app.route('/home')
 def home_page():
@@ -22,9 +27,5 @@ def home_page():
 
 @app.route('/admin')
 def admin_page():
-    item = [
-        {'id': 1, 'date': '20/12/2022', 'name': 'Evaline', 'kilograms': '1200', 'amount': 9600},
-        {'id': 2, 'date': '20/12/2022', 'name': 'Leonard', 'kilograms': '1300', 'amount': 10400},
-        {'id': 3, 'date': '20/12/2022', 'name': 'Karen', 'kilograms': '1400', 'amount': 11200}
-    ]
+    item = Item.query.all()
     return render_template('admin.html', items=item)
